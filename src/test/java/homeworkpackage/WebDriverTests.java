@@ -1,24 +1,24 @@
 package homeworkpackage;
 
-import homeworkpackage.config.WebDriverProvider;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
+import homeworkpackage.config.MobileConfig;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 public class WebDriverTests {
 
-private WebDriver driver;
+    private WebDriver driver;
 
-    @BeforeEach
-    public void startDriver() {
-        driver = new WebDriverProvider().get();
-    }
+    //    @BeforeEach
+//    public void startDriver() {
+//        driver = new WebDriverProvider().get();
+//    }
+    public static String env = System.getProperty("env");
 
     @Test
     public void testGit() {
@@ -26,9 +26,29 @@ private WebDriver driver;
         Assertions.assertNotEquals("GitHub: Where the world builds software * GitHub", title);
     }
 
-    @AfterEach
-    public void stopDriver() {
-        driver.quit();
+    @Test
+    @Tag("remote")
+    public void mobileRemote() {
+        MobileConfig config = ConfigFactory.create(MobileConfig.class, System.getProperties());
+
+        assertThat(config.getPlatformName()).isEqualTo("IOS");
+        assertThat(config.getDeviceName()).isEqualTo("IPhone 14 Pro Max");
+        assertThat(config.getPlatformVersion()).isEqualTo("14");
     }
+
+    @Test
+    @Tag("local")
+    public void mobileLocal() {
+        MobileConfig config = ConfigFactory.create(MobileConfig.class, System.getProperties());
+
+        assertThat(config.getPlatformName()).isEqualTo("Android");
+        assertThat(config.getDeviceName()).isEqualTo("Google Pixel 5");
+        assertThat(config.getPlatformVersion()).isEqualTo("12");
+    }
+
+//    @AfterEach
+//    public void stopDriver() {
+//        driver.quit();
+//    }
 
 }

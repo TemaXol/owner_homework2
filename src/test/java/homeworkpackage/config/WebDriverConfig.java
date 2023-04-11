@@ -1,14 +1,20 @@
 package homeworkpackage.config;
 
-public class WebDriverConfig {
+import org.aeonbits.owner.Config;
 
-    public String getBaseUrl() {
-       String baseUrl = System.getProperty("baseUrl");
-        return baseUrl;
-    }
+import java.net.URL;
 
-    public Browser getBrowser() {
-        String browser = System.getProperty("browser");
-        return Browser.valueOf(browser);
-    }
+public interface WebDriverConfig extends Config {
+
+    @Key("baseUrl")
+    @DefaultValue("https://github.com")
+    String getBaseUrl();
+
+    @Key("browser")
+    @DefaultValue("FIREFOX")
+    Browser getBrowser();
+
+    @Key("remoteUrl")
+    @DefaultValue("https://localhost:4444")
+    URL getRemoteUrl();
 }
