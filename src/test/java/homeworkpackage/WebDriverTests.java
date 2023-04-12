@@ -12,19 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class WebDriverTests {
 
-    private WebDriver driver;
-
-    //    @BeforeEach
-//    public void startDriver() {
-//        driver = new WebDriverProvider().get();
-//    }
     public static String env = System.getProperty("env");
-
-    @Test
-    public void testGit() {
-        String title = driver.getTitle();
-        Assertions.assertNotEquals("GitHub: Where the world builds software * GitHub", title);
-    }
 
     @Test
     @Tag("remote")
@@ -45,10 +33,5 @@ public class WebDriverTests {
         assertThat(config.getDeviceName()).isEqualTo("Google Pixel 5");
         assertThat(config.getPlatformVersion()).isEqualTo("12");
     }
-
-//    @AfterEach
-//    public void stopDriver() {
-//        driver.quit();
-//    }
 
 }
